@@ -21,6 +21,13 @@ int main(void)
 
     ssize_t received = recvfrom(sockfd, buffer, sizeof(buffer), 0, NULL, NULL);
 
+    //The amount of packets received
     printf("%zd\n", received);
+
+    //prints in hex
+    for(int i = 0; i < received; i++) {
+        printf("%02X ", buffer[i]);
+    }
+    printf("\n");
 
 }
