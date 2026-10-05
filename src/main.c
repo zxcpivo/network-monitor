@@ -31,3 +31,6 @@ int main(void)
     printf("\n");
 
 }
+
+
+//fix issues before proceeding
