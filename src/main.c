@@ -3,6 +3,7 @@
 #include <linux/if_packet.h> // Linux packet-socket-specific definitions
 #include <linux/if_ether.h> // protocols (?)
 #include <arpa/inet.h> // idk
+#include <unistd.h> //close socket
 
 int main(void)
 {
@@ -15,13 +16,20 @@ int main(void)
 
     if(sockfd == -1) {
         perror("socket");
+        return 1;
     }
 
     printf("%d\n", sockfd);
 
     ssize_t received = recvfrom(sockfd, buffer, sizeof(buffer), 0, NULL, NULL);
 
-    //The amount of packets received
+    if(received == -1) {
+        perror("revfrom");
+        close(sockfd);
+        return 1;
+    }
+
+    //The amount of bytes received
     printf("%zd\n", received);
 
     //prints in hex
@@ -29,6 +37,8 @@ int main(void)
         printf("%02X ", buffer[i]);
     }
     printf("\n");
+
+    close(sockfd);
 
 }
 
