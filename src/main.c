@@ -7,7 +7,7 @@
 
 int main(void)
 {
-    printf("Network Monitor starting...\n");
+    printf("Network Monitor starting...\n\n");
 
    int sockfd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 
@@ -19,7 +19,8 @@ int main(void)
         return 1;
     }
 
-    printf("%d\n", sockfd);
+    //print socket file descriptor (socket identifier)
+    printf("Socket file descriptor: %d\n", sockfd);
 
     ssize_t received = recvfrom(sockfd, buffer, sizeof(buffer), 0, NULL, NULL);
 
@@ -30,17 +31,28 @@ int main(void)
     }
 
     //The amount of bytes received
-    printf("%zd\n", received);
+    printf("Amount of bytes recieved: %zd\n\n", received);
 
     //prints in hex
+    printf("Raw hex:\n");
     for(int i = 0; i < received; i++) {
         printf("%02X ", buffer[i]);
     }
-    printf("\n");
+    printf("\n\n");
 
+
+
+    printf("ETHERNET HEADER: \n");
+
+    printf("Destination MAC address: ");
+    for(int i = 0; i < 4; i++) {
+        printf("%02X ", buffer[i]);
+    }
+
+
+
+
+    printf("\n");
     close(sockfd);
 
 }
-
-
-//fix issues before proceeding
